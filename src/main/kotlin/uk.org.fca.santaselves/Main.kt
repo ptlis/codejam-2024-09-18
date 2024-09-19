@@ -3,17 +3,17 @@ package uk.org.fca.santaselves
 import java.io.File
 
 fun main() {
+    val used = readDimensions("data/presents")
+        .map { calculatePaperUsed(it) }
+        .sum()
 
-    val dimensions = readDimensions("data/presents")
-
-    println("Hello world")
+    println("Total paper used: ${java.text.NumberFormat.getIntegerInstance().format(used)}")
 }
 
-
-fun readDimensions(fileName: String): List<List<String>> {
+fun readDimensions(fileName: String): List<List<Int>> {
     return File(fileName)
         .useLines { it.toList() }
-        .map { it.split('x') }
+        .map { it.split('x').map { it.toInt()} }
 }
 
 fun calculatePaperUsed(d: List<Int>): Int {
