@@ -5,14 +5,26 @@ import kotlin.test.Test
 
 class MainKtTest {
     @Test
-    fun testExample1() {
+    fun testPaperExample1() {
         val expected = 58
-        assertEquals(expected, calculatePaperUsed(listOf(2, 3, 4)))
+        assertEquals(expected, calculatePaperRequired(listOf(2, 3, 4)))
     }
 
     @Test
-    fun testExample2() {
+    fun testPaperExample2() {
         val expected = 43
-        assertEquals(expected, calculatePaperUsed(listOf(1, 1, 10)))
+        assertEquals(expected, calculatePaperRequired(listOf(1, 1, 10)))
+    }
+
+    @Test
+    fun testRibbonExample1() {
+        val expected = 34
+        assertEquals(expected, calculateRibbonRequired(listOf(2, 3, 4)))
+    }
+
+    @Test
+    fun testRibbonExample2() {
+        val expected = 14
+        assertEquals(expected, calculateRibbonRequired(listOf(1, 1, 10)))
     }
 }

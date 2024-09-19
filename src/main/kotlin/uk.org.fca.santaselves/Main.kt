@@ -3,11 +3,14 @@ package uk.org.fca.santaselves
 import java.io.File
 
 fun main() {
-    val used = readDimensions("data/presents")
-        .map { calculatePaperUsed(it) }
-        .sum()
+    val dimensions = readDimensions("data/presents")
 
-    println("Total paper used: ${java.text.NumberFormat.getIntegerInstance().format(used)}")
+    val paperRequired = dimensions.sumOf { calculatePaperRequired(it) }
+
+    val ribbonRequired = dimensions.sumOf { calculateRibbonRequired(it) }
+
+    println("Total paper required: ${java.text.NumberFormat.getIntegerInstance().format(paperRequired)}")
+    println("Total ribbon required: ${java.text.NumberFormat.getIntegerInstance().format(ribbonRequired)}")
 }
 
 fun readDimensions(fileName: String): List<List<Int>> {
@@ -16,8 +19,13 @@ fun readDimensions(fileName: String): List<List<Int>> {
         .map { it.split('x').map { it.toInt()} }
 }
 
-fun calculatePaperUsed(d: List<Int>): Int {
+fun calculatePaperRequired(d: List<Int>): Int {
     val sides = listOf(d[0] * d[1], d[1] * d[2], d[2] * d[0])
 
-    return sides.map { it * 2 }.sum() + sides.min()
+    return sides.sumOf { it * 2 } + sides.min()
+}
+
+fun calculateRibbonRequired(d: List<Int>): Int {
+    return d.sorted()
+        .slice(0..1).sumOf { it * 2 } + (d[0] * d[1] * d[2])
 }
